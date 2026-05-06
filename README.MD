@@ -1,5 +1,21 @@
 # Operations KPI Automation — SLA & Backlog Analytics
 
+## Problem This Solves
+
+Ops-heavy teams lose control when SLA breaches, backlog, and team-level performance are tracked manually or only reviewed after escalation. The problem is turning ticket lifecycles into a daily operating dashboard.
+
+## How It Helps
+
+- Generates a realistic support/ops ticket dataset and computes SLA compliance, backlog trends, breach drivers, and team-level scorecards.
+- Gives founders and ops leads a starter reporting layer for staffing, escalation, process quality, and customer experience decisions.
+- Exports BI-ready datasets that can be loaded into Tableau or adapted to another dashboard layer.
+
+## When To Fork This
+
+- Fork this if you run support, onboarding, sales ops, shipment ops, training ops, or any queue-based team.
+- Fork it when leadership asks which team, priority, or process is driving SLA pain and no one has a clean answer.
+- Adapt the team names, SLA thresholds, backlog logic, breach definitions, and dashboard views to your own workflow.
+
 **End-to-end operational analytics pipeline** tracking 80,000 ticket 
 lifecycles across 5 teams. Monitors SLA compliance, identifies breach 
 drivers, and surfaces backlog trends for operational decision-making.
@@ -53,8 +69,8 @@ on ad hoc data pulls.
 ## How to Run
 
 ```bash
-python src/generate_data.py
-python src/analysis.py
+python3 src/generate_data.py
+python3 src/analysis.py
 ```
 
 ---
@@ -67,5 +83,5 @@ SLA visibility drives staffing, escalation, and process decisions.
 
 ---
 
-*Part of a portfolio targeting analyst roles at Series A+ startups.*  
+*Part of a founder/operator toolkit for people building practical startup operating systems.*  
 *[← Back to Profile](https://github.com/shubham1502-hue)*

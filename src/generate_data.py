@@ -100,5 +100,5 @@ def generate_ops_tickets(n=80000, out_dir="data", seed=42):
 if __name__ == "__main__":
     generate_ops_tickets(
         n=80000,
-        out_dir="/Users/vegitto/Desktop/projects/operations-kpi-automation/data"
+        out_dir="data"
     )
