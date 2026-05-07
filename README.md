@@ -1,8 +1,160 @@
 # Operations KPI Command Center
 
+Operations KPI workflow for SLA compliance, backlog risk, breach drivers, and team-level execution visibility.
+
+<!-- FOUNDER_OS_STANDARD_README -->
+
+## The founder problem
+
+Ops-heavy startups can have ticket data but still miss the operating picture: where SLAs are slipping, which teams are overloaded, and what needs intervention before customers feel the problem.
+
+## What this repo does
+
+- generates sample operations ticket data
+- analyzes SLA and backlog metrics
+- exports KPI summary files
+- creates dashboard-ready artifacts
+
+## What a founder gets in 10 minutes
+
+- KPI summary CSV
+- SLA by team output
+- top breach drivers
+- backlog trend data
+- dashboard preview
+
+## Before and after
+
+Before:
+
+- ticket exports with no owner
+- manual SLA reporting
+- backlog surprises
+- unclear breach drivers
+
+After:
+
+- repeatable ops review
+- team-level SLA view
+- breach driver list
+- dashboard-ready outputs
+
+## Who this is for
+
+- operations leads
+- early-stage founders
+- Founder's Office teams
+- BizOps operators
+- service delivery teams
+
+## Quick start
+
+- Run `python3 -m pip install -r requirements.txt`.
+- Run `python3 src/generate_data.py`.
+- Run `python3 src/analysis.py`.
+- Open `data/kpi_summary.csv` first.
+
+## How to fork and use this for your company
+
+1. Click Fork.
+2. Rename the repo if needed.
+3. Replace `data/ops_tickets.csv` with your ticket export.
+4. Update SLA thresholds and team mappings in `src/analysis.py`.
+5. Run the analysis before the weekly operations review.
+6. Move outputs into Google Sheets, Notion, Airtable, Linear, Asana, ClickUp, or your BI tool.
+
+### Non-technical path
+
+- Replace one CSV: `data/ops_tickets.csv`.
+- Edit one threshold section in `src/analysis.py` if needed.
+- Run two commands.
+- Read one output first: `data/kpi_summary.csv`.
+
+## Input format
+
+- ticket ID
+- team
+- owner
+- status
+- created date
+- resolved date
+- SLA target
+- priority
+- breach reason
+
+The default sample data and examples are synthetic, anonymized, or template-only unless the repo explicitly documents a public source. Keep private customer, prospect, employee, investor, borrower, merchant, payment, or company data out of public forks.
+
+## Output files
+
+- `data/kpi_summary.csv`: top-line ops KPIs
+- `data/sla_by_team.csv`: team SLA performance
+- `data/top_sla_breaches.csv`: breach drivers
+- `data/backlog_trend.csv`: backlog trend
+- `dashboard/SLA_Backlog_Dashboard.png`: dashboard preview
+
+## Example founder workflow
+
+- Monday: refresh ticket export.
+- Tuesday: run KPI analysis.
+- Wednesday: review breach drivers.
+- Thursday: assign operational fixes.
+- Friday: update weekly operating review with decisions.
+
+## Customization guide
+
+Customize these before using the repo for a real company:
+
+- SLA thresholds
+- team names
+- breach categories
+- priority rules
+- dashboard columns
+
+## Where this fits in the Founder OS
+
+This is the operations execution layer. Pair it with `founder-weekly-operating-review-agent` for weekly cadence and `revops-infrastructure-playbook` for handoff and reporting design.
+
+## Why this matters
+
+This is not a screenshot dashboard. It is a repeatable operations review workflow for deciding where to intervene.
+
+## Roadmap
+
+- Google Sheets export
+- Slack SLA alerts
+- Linear and Asana sync
+- Streamlit dashboard
+- weekly review integration
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) if present. Practical improvements are welcome when they make the workflow easier to fork, run, or adapt.
+
+## License
+
+MIT License. See [LICENSE](LICENSE).
+
+## Built by
+
+Built by Shubham Singh, a founder-facing operator focused on RevOps, GTM systems, startup metrics, AI workflows, and operating systems for early-stage teams.
+
+## Use this in your company
+
+Fork it, replace the sample inputs with your company context, and run the workflow. Start with the main output listed in the Quick Start section. Keep private data out of public forks.
+
+## If you are a Founder's Office candidate
+
+Use this repo to understand how a founder-facing operator turns messy inputs into decisions, cadence, and execution artifacts. Fork it, adapt it to a real company example, and write a short case note explaining what changed.
+
+---
+
+## Detailed implementation notes
+
+The founder-facing guide above is the fastest path. The original repo-specific notes are preserved below for deeper implementation context.
+
 A founder/operator command center for service delivery health, SLA compliance, backlog risk, breach drivers, and team-level execution visibility.
 
-Early-stage teams lose control of service delivery when SLA breaches, backlog growth, ownership gaps, and execution bottlenecks are scattered across tickets, sheets, and manual reports. This repo turns ticket lifecycle data into a repeatable operations review system that helps founders, ops leads, service delivery teams, and Founder’s Office operators see where execution is breaking down and where to intervene first.
+Early-stage teams lose control of service delivery when SLA breaches, backlog growth, ownership gaps, and execution bottlenecks are scattered across tickets, sheets, and manual reports. This repo turns ticket lifecycle data into a repeatable operations review system that helps founders, ops leads, service delivery teams, and Founder's Office operators see where execution is breaking down and where to intervene first.
 
 ## Problem
 
@@ -69,7 +221,7 @@ Current sample outputs show:
 - Founder weekly ops review: identify which team or workflow is creating the most service delivery risk.
 - Support operations: monitor SLA compliance and backlog pressure before customer escalations compound.
 - Service delivery leadership: compare team-level execution health across queues.
-- Founder’s Office operating cadence: turn raw ticket exports into a weekly intervention list.
+- Founder's Office operating cadence: turn raw ticket exports into a weekly intervention list.
 - Board or investor prep: summarize operational discipline with concrete SLA and backlog metrics.
 - Tableau reporting: refresh BI-ready CSV outputs for a simple SLA/backlog dashboard.
 
@@ -88,7 +240,7 @@ Current sample outputs show:
 | Edit | Where | Why |
 | --- | --- | --- |
 | Replace ticket data | `data/ops_tickets.csv` or `src/generate_data.py` | Use your real ticket lifecycle, queue, team, priority, and resolution fields. |
-| Map lifecycle fields | `src/analysis.py` | Align KPI logic with your ticketing system’s column names and workflow. |
+| Map lifecycle fields | `src/analysis.py` | Align KPI logic with your ticketing system's column names and workflow. |
 | Tune SLA thresholds | `src/generate_data.py` or your source export | Match what your company considers low, medium, high, and critical service commitments. |
 | Update backlog definition | `src/analysis.py` | Backlog should reflect your real operating risk, not just a sample flag. |
 | Refresh BI outputs | `data/*.csv` | Keep Tableau or other reporting layers aligned with the latest analysis. |
@@ -124,16 +276,16 @@ The scripts write CSV outputs into `data/`. Because this repo includes sample CS
 ```text
 .
 |-- dashboard/
-|   `-- SLA_Backlog_Dashboard.png
+|  `-- SLA_Backlog_Dashboard.png
 |-- data/
-|   |-- backlog_trend.csv
-|   |-- kpi_summary.csv
-|   |-- ops_tickets.csv
-|   |-- sla_by_team.csv
-|   `-- top_sla_breaches.csv
+|  |-- backlog_trend.csv
+|  |-- kpi_summary.csv
+|  |-- ops_tickets.csv
+|  |-- sla_by_team.csv
+|  `-- top_sla_breaches.csv
 |-- src/
-|   |-- analysis.py
-|   `-- generate_data.py
+|  |-- analysis.py
+|  `-- generate_data.py
 |-- .gitignore
 |-- LICENSE
 |-- README.md
@@ -146,10 +298,10 @@ The scripts write CSV outputs into `data/`. Because this repo includes sample CS
 - For onboarding teams: replace ticket priority with onboarding phase, customer segment, or launch risk.
 - For fulfillment or shipment ops: map SLA targets to delivery promise, dispatch delay, or exception handling time.
 - For sales ops: track lead routing, quote turnaround, contract ops tasks, and queue aging.
-- For Founder’s Office cadence: add owner, intervention, due date, and next review status to the scorecard.
+- For Founder's Office cadence: add owner, intervention, due date, and next review status to the scorecard.
 
 Keep the operating loop simple: measure SLA health, find backlog risk, isolate breach drivers, assign owners, and review progress weekly.
 
 ## Portfolio Note
 
-This repo is part of a Founder’s Office / startup operator portfolio focused on practical operating systems for early-stage companies. It demonstrates how an operator can move from messy service delivery data to KPI visibility, execution scorecards, and founder-level intervention areas.
+This repo is part of a Founder's Office / startup operator portfolio focused on practical operating systems for early-stage companies. It demonstrates how an operator can move from messy service delivery data to KPI visibility, execution scorecards, and founder-level intervention areas.
