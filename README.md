@@ -36,12 +36,16 @@ This repo is designed to be forked into an internal company workflow. Fork it, r
 
 ## Minimum Edits To Make It Yours
 
-- team names
-- priority/SLA thresholds
-- ticket lifecycle fields
-- dashboard labels
+Change these first:
 
-The fastest path is: fork the repo, replace the inputs above, run the demo or open the template, then adjust only the parts that reflect your company's workflow.
+| Edit | Where | Why |
+|---|---|---|
+| Replace ticket or operations data. | `data/ops_tickets.csv` | This drives SLA, backlog, breach, and team-level metrics. |
+| Update team names and lifecycle fields. | `src/analysis.py` and data columns | Makes the KPI logic match your org and workflow. |
+| Tune SLA and priority thresholds. | `src/analysis.py` | Changes what the system marks as urgent, delayed, or breached. |
+| Regenerate KPI CSVs and dashboard image. | `data/*.csv` and `dashboard/SLA_Backlog_Dashboard.png` | Keeps operating outputs aligned with your data. |
+
+You can leave the dashboard structure, analysis flow, and generated-output names alone on the first fork. First map your fields; then tune SLA definitions.
 
 ## Key Results
 
