@@ -1,3 +1,30 @@
+# OS/editor files
 .DS_Store
+
+# Python cache and test artifacts
 __pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local environment and secrets
 .env
+.env.*
+!.env.example
+.venv/
+venv/
+env/
+
+# Local generated exports and scratch outputs
+exports/
+local_exports/
+outputs/
+tmp/
+*.db
+*.sqlite
+*.sqlite3
+*.parquet
+*.pkl
+*.log

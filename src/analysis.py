@@ -143,6 +143,6 @@ def analyze_ops_data(input_path, output_dir):
 if __name__ == "__main__":
 
     analyze_ops_data(
-        input_path="/Users/vegitto/Desktop/projects/operations-kpi-automation/data/ops_tickets.csv",
-        output_dir="/Users/vegitto/Desktop/projects/operations-kpi-automation/data"
+        input_path="data/ops_tickets.csv",
+        output_dir="data"
     )

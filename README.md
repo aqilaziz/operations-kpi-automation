@@ -1,108 +1,155 @@
-# Operations KPI Automation — SLA & Backlog Analytics
+# Operations KPI Command Center
 
-## Problem This Solves
+A founder/operator command center for service delivery health, SLA compliance, backlog risk, breach drivers, and team-level execution visibility.
 
-Ops-heavy teams lose control when SLA breaches, backlog, and team-level performance are tracked manually or only reviewed after escalation. The problem is turning ticket lifecycles into a daily operating dashboard.
+Early-stage teams lose control of service delivery when SLA breaches, backlog growth, ownership gaps, and execution bottlenecks are scattered across tickets, sheets, and manual reports. This repo turns ticket lifecycle data into a repeatable operations review system that helps founders, ops leads, service delivery teams, and Founder’s Office operators see where execution is breaking down and where to intervene first.
 
-## How It Helps
+## Problem
 
-- Generates a realistic support/ops ticket dataset and computes SLA compliance, backlog trends, breach drivers, and team-level scorecards.
-- Gives founders and ops leads a starter reporting layer for staffing, escalation, process quality, and customer experience decisions.
-- Exports BI-ready datasets that can be loaded into Tableau or adapted to another dashboard layer.
+Ops-heavy startups often have the raw data but not the operating cadence:
 
-## When To Fork This
+- SLA breaches are discovered after escalations.
+- Backlog growth is reviewed manually instead of monitored weekly.
+- Team-level ownership gaps are hidden inside ticket exports.
+- Leaders debate symptoms without a clean view of breach drivers.
+- Dashboard work depends on ad hoc data pulls instead of a reusable pipeline.
 
-- Fork this if you run support, onboarding, sales ops, shipment ops, training ops, or any queue-based team.
-- Fork it when leadership asks which team, priority, or process is driving SLA pain and no one has a clean answer.
-- Adapt the team names, SLA thresholds, backlog logic, breach definitions, and dashboard views to your own workflow.
+This project shows how to convert ticket operations data into leadership-ready KPIs, scorecards, and Tableau-ready exports.
 
-**End-to-end operational analytics pipeline** tracking 80,000 ticket 
-lifecycles across 5 teams. Monitors SLA compliance, identifies breach 
-drivers, and surfaces backlog trends for operational decision-making.
+## What This Repo Includes
 
-Built to simulate the kind of self-serve reporting infrastructure that 
-ops and support teams rely on to manage performance without depending 
-on ad hoc data pulls.
+- `src/generate_data.py`: generates a synthetic 80,000-row operations ticket dataset.
+- `src/analysis.py`: computes SLA compliance, backlog trends, team scorecards, and top breach records.
+- `data/ops_tickets.csv`: sample ticket lifecycle dataset.
+- `data/kpi_summary.csv`: summary KPI output.
+- `data/sla_by_team.csv`: team-level SLA scorecard output.
+- `data/backlog_trend.csv`: monthly backlog trend output.
+- `data/top_sla_breaches.csv`: ticket-level breach driver output.
+- `dashboard/SLA_Backlog_Dashboard.png`: dashboard preview image.
+- `requirements.txt`: Python package requirements.
+- `LICENSE`: MIT license for reuse.
 
----
+The CSV files are tracked as sample portfolio outputs. If you regenerate them, review the diff before committing refreshed outputs.
+
+## System Workflow
+
+1. Generate or replace ticket lifecycle data.
+2. Calculate SLA status and breach hours.
+3. Summarize operational health into KPI, backlog, and team-level outputs.
+4. Review breach drivers by team, priority, and resolution time.
+5. Load the exports into Tableau or another BI layer for weekly ops review.
+6. Use the scorecards to decide where founders or ops leads should intervene.
+
+## KPI Logic
+
+The repo models a service delivery workflow with ticket-level SLA targets:
+
+```text
+Ticket Created -> Ticket Resolved -> SLA Met / SLA Breached -> Backlog Flag -> Team Scorecard
+```
+
+Core logic:
+
+- SLA met = actual resolution hours <= SLA target hours.
+- Breach hours = actual resolution hours - SLA target hours when resolution exceeds target.
+- Overall SLA compliance = tickets meeting SLA / total tickets.
+- Average monthly backlog = average monthly count of backlog-flagged tickets.
+- Team scorecard = ticket volume, SLA-met count, average resolution hours, total breaches, and SLA compliance rate by team.
+- Top breach drivers = highest breach-hour tickets with team, priority, actual resolution hours, and SLA target.
+
+Current sample outputs show:
+
+- 80,000 tickets analyzed.
+- 90.4% SLA compliance.
+- 1,213 average monthly backlog.
+- Teams monitored: Onboarding, Sales Ops, Shipment, Support, and Training.
+
+## Example Operator Use Cases
+
+- Founder weekly ops review: identify which team or workflow is creating the most service delivery risk.
+- Support operations: monitor SLA compliance and backlog pressure before customer escalations compound.
+- Service delivery leadership: compare team-level execution health across queues.
+- Founder’s Office operating cadence: turn raw ticket exports into a weekly intervention list.
+- Board or investor prep: summarize operational discipline with concrete SLA and backlog metrics.
+- Tableau reporting: refresh BI-ready CSV outputs for a simple SLA/backlog dashboard.
 
 ## Use This In Your Company
 
-This repo is designed to be forked into an internal company workflow. Fork it, replace the sample inputs with your company context, and keep only the parts that match your operating cadence. No permission request or sales call is needed before using it; the repo is the handoff. Check the license if you plan to redistribute your version.
+1. Replace the sample ticket data with a Zendesk, Intercom, HubSpot, Jira, Linear, Freshdesk, or spreadsheet export.
+2. Map your ticket fields to the current schema: team, region, priority, SLA target, resolution hours, and backlog flag.
+3. Tune SLA thresholds so they match your customer promise and internal service levels.
+4. Run the analysis before your weekly operations review.
+5. Review the team scorecard and top breach list with named owners.
+6. Assign interventions for the highest-risk queue or breach driver.
+7. Refresh the dashboard only after the CSV outputs are validated.
 
-- Use it as an operations dashboard starter for support, onboarding, fulfillment, sales ops, or service delivery teams.
-- Keep the logic: tickets -> SLA compliance -> backlog -> breach drivers -> team scorecards.
-- Replace sample queues, teams, priorities, and SLA thresholds with your company workflow.
-
-## Minimum Edits To Make It Yours
-
-Change these first:
+## Minimum Edits Before First Use
 
 | Edit | Where | Why |
-|---|---|---|
-| Replace ticket or operations data. | `data/ops_tickets.csv` | This drives SLA, backlog, breach, and team-level metrics. |
-| Update team names and lifecycle fields. | `src/analysis.py` and data columns | Makes the KPI logic match your org and workflow. |
-| Tune SLA and priority thresholds. | `src/analysis.py` | Changes what the system marks as urgent, delayed, or breached. |
-| Regenerate KPI CSVs and dashboard image. | `data/*.csv` and `dashboard/SLA_Backlog_Dashboard.png` | Keeps operating outputs aligned with your data. |
+| --- | --- | --- |
+| Replace ticket data | `data/ops_tickets.csv` or `src/generate_data.py` | Use your real ticket lifecycle, queue, team, priority, and resolution fields. |
+| Map lifecycle fields | `src/analysis.py` | Align KPI logic with your ticketing system’s column names and workflow. |
+| Tune SLA thresholds | `src/generate_data.py` or your source export | Match what your company considers low, medium, high, and critical service commitments. |
+| Update backlog definition | `src/analysis.py` | Backlog should reflect your real operating risk, not just a sample flag. |
+| Refresh BI outputs | `data/*.csv` | Keep Tableau or other reporting layers aligned with the latest analysis. |
+| Update dashboard view | `dashboard/SLA_Backlog_Dashboard.png` or your BI tool | Reflect your real teams, queues, and review cadence. |
 
-You can leave the dashboard structure, analysis flow, and generated-output names alone on the first fork. First map your fields; then tune SLA definitions.
+## How To Run / Use
 
-## Key Results
+Install dependencies:
 
-| Metric | Value |
-|---|---|
-| Tickets Analyzed | 80,000 |
-| SLA Compliance Rate | 90.4% |
-| Average Backlog | 1,213 tickets |
-| Teams Monitored | Onboarding, Sales Ops, Shipment, Support, Training |
+```bash
+pip install -r requirements.txt
+```
 
----
-
-## What It Does
-
-- **SLA breach detection** — flags tickets exceeding thresholds by team and priority
-- **Backlog trend monitoring** — moving average + monthly volume to isolate demand spikes
-- **Team-level compliance scoring** — ranked view to identify lowest-performing queues
-- **Breach root cause view** — individual ticket drill-down with breach hours by department
-
----
-
-## Dashboard Preview
-
-![SLA & Backlog Dashboard](dashboard/SLA_Backlog_Dashboard.png)
-
-🔗 **[Open Live Tableau Dashboard](https://public.tableau.com/views/SLABacklog/Dashboard1)**
-
----
-
-## Tech Stack
-
-`Python` · `Pandas` · `Tableau Public` · `Git`
-
-**Pipeline:**
-1. Synthetic data generation with weighted SLA distribution
-2. KPI computation and breach modeling
-3. Automated export of BI-ready datasets
-4. Tableau dashboard visualization
-
----
-
-## How to Run
+Run from the repo root:
 
 ```bash
 python3 src/generate_data.py
 python3 src/analysis.py
 ```
 
----
+The scripts write CSV outputs into `data/`. Because this repo includes sample CSV outputs for portfolio review, running the scripts may modify tracked files. Commit refreshed CSVs only when you intentionally want to update the sample dataset and dashboard inputs.
 
-## Strategic Context
+## Outputs
 
-Simulates real-world operational reporting workflows used in 
-large-scale e-commerce and ops-heavy startups where support team 
-SLA visibility drives staffing, escalation, and process decisions.
+- `data/kpi_summary.csv`: overall SLA compliance, total tickets, and average monthly backlog.
+- `data/sla_by_team.csv`: team-level ticket count, SLA-met count, average resolution hours, breaches, and compliance rate.
+- `data/backlog_trend.csv`: monthly ticket volume, backlog count, and backlog rate.
+- `data/top_sla_breaches.csv`: top ticket-level SLA breaches by breach hours.
+- `dashboard/SLA_Backlog_Dashboard.png`: static dashboard preview for the SLA/backlog reporting layer.
 
----
+## Folder Structure
 
-*Part of a founder/operator toolkit for people building practical startup operating systems.*  
-*[← Back to Profile](https://github.com/shubham1502-hue)*
+```text
+.
+|-- dashboard/
+|   `-- SLA_Backlog_Dashboard.png
+|-- data/
+|   |-- backlog_trend.csv
+|   |-- kpi_summary.csv
+|   |-- ops_tickets.csv
+|   |-- sla_by_team.csv
+|   `-- top_sla_breaches.csv
+|-- src/
+|   |-- analysis.py
+|   `-- generate_data.py
+|-- .gitignore
+|-- LICENSE
+|-- README.md
+`-- requirements.txt
+```
+
+## Customization Guide
+
+- For support teams: map ticket source, customer tier, escalation reason, and first response time.
+- For onboarding teams: replace ticket priority with onboarding phase, customer segment, or launch risk.
+- For fulfillment or shipment ops: map SLA targets to delivery promise, dispatch delay, or exception handling time.
+- For sales ops: track lead routing, quote turnaround, contract ops tasks, and queue aging.
+- For Founder’s Office cadence: add owner, intervention, due date, and next review status to the scorecard.
+
+Keep the operating loop simple: measure SLA health, find backlog risk, isolate breach drivers, assign owners, and review progress weekly.
+
+## Portfolio Note
+
+This repo is part of a Founder’s Office / startup operator portfolio focused on practical operating systems for early-stage companies. It demonstrates how an operator can move from messy service delivery data to KPI visibility, execution scorecards, and founder-level intervention areas.
