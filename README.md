@@ -26,6 +26,21 @@ on ad hoc data pulls.
 
 ---
 
+## Use This In Your Company
+
+- Use it as an operations dashboard starter for support, onboarding, fulfillment, sales ops, or service delivery teams.
+- Keep the logic: tickets -> SLA compliance -> backlog -> breach drivers -> team scorecards.
+- Replace sample queues, teams, priorities, and SLA thresholds with your company workflow.
+
+## Minimum Edits To Make It Yours
+
+- team names
+- priority/SLA thresholds
+- ticket lifecycle fields
+- dashboard labels
+
+The fastest path is: fork the repo, replace the inputs above, run the demo or open the template, then adjust only the parts that reflect your company's workflow.
+
 ## Key Results
 
 | Metric | Value |
