@@ -18,6 +18,7 @@ Ops-heavy startups can have ticket data but still miss the operating picture: wh
 ## What a founder gets in 10 minutes
 
 - KPI summary CSV
+- executive summary Markdown
 - SLA by team output
 - top breach drivers
 - backlog trend data
@@ -87,6 +88,7 @@ The default sample data and examples are synthetic, anonymized, or template-only
 ## Output files
 
 - `data/kpi_summary.csv`: top-line ops KPIs
+- `data/executive_summary.md`: founder-ready weekly operations summary
 - `data/sla_by_team.csv`: team SLA performance
 - `data/top_sla_breaches.csv`: breach drivers
 - `data/backlog_trend.csv`: backlog trend
@@ -174,6 +176,7 @@ This project shows how to convert ticket operations data into leadership-ready K
 - `src/analysis.py`: computes SLA compliance, backlog trends, team scorecards, and top breach records.
 - `data/ops_tickets.csv`: sample ticket lifecycle dataset.
 - `data/kpi_summary.csv`: summary KPI output.
+- `data/executive_summary.md`: founder-ready Markdown summary output.
 - `data/sla_by_team.csv`: team-level SLA scorecard output.
 - `data/backlog_trend.csv`: monthly backlog trend output.
 - `data/top_sla_breaches.csv`: ticket-level breach driver output.
@@ -266,6 +269,7 @@ The scripts write CSV outputs into `data/`. Because this repo includes sample CS
 ## Outputs
 
 - `data/kpi_summary.csv`: overall SLA compliance, total tickets, and average monthly backlog.
+- `data/executive_summary.md`: weekly Markdown summary with SLA compliance, backlog trend, top breach driver, and recommended action.
 - `data/sla_by_team.csv`: team-level ticket count, SLA-met count, average resolution hours, breaches, and compliance rate.
 - `data/backlog_trend.csv`: monthly ticket volume, backlog count, and backlog rate.
 - `data/top_sla_breaches.csv`: top ticket-level SLA breaches by breach hours.
@@ -279,6 +283,7 @@ The scripts write CSV outputs into `data/`. Because this repo includes sample CS
 |  `-- SLA_Backlog_Dashboard.png
 |-- data/
 |  |-- backlog_trend.csv
+|  |-- executive_summary.md
 |  |-- kpi_summary.csv
 |  |-- ops_tickets.csv
 |  |-- sla_by_team.csv
