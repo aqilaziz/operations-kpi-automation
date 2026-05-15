@@ -205,6 +205,9 @@ def write_executive_summary(
     with open(output_path, "w", encoding="utf-8") as handle:
         handle.write("\n".join(lines))
 
+    if not os.path.isfile(output_path):
+        raise RuntimeError(f"Expected executive summary at {output_path}")
+
 
 if __name__ == "__main__":
 
