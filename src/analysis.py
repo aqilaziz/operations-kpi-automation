@@ -1,14 +1,62 @@
 import pandas as pd
 import numpy as np
 import os
+import json
+import argparse
+from pathlib import Path
 
 
-def analyze_ops_data(input_path, output_dir):
+DEFAULT_SLA_POLICY = {
+    "priority_hours": {
+        "Low": 48,
+        "Medium": 24,
+        "High": 8,
+        "Critical": 4,
+    },
+    "team_priority_hours": {},
+}
+
+
+def load_sla_policy(path=None):
+    policy = {
+        "priority_hours": DEFAULT_SLA_POLICY["priority_hours"].copy(),
+        "team_priority_hours": DEFAULT_SLA_POLICY["team_priority_hours"].copy(),
+    }
+    if not path:
+        return policy
+
+    raw = json.loads(Path(path).read_text(encoding="utf-8"))
+    if not isinstance(raw, dict):
+        raise ValueError(f"SLA policy must be a JSON object: {path}")
+
+    for key in ("priority_hours", "team_priority_hours"):
+        if key in raw and not isinstance(raw[key], dict):
+            raise ValueError(f"SLA policy field '{key}' must be an object.")
+
+    policy["priority_hours"].update(raw.get("priority_hours", {}))
+    policy["team_priority_hours"].update(raw.get("team_priority_hours", {}))
+    return policy
+
+
+def apply_sla_policy(df, policy):
+    def target_for_row(row):
+        team_rules = policy["team_priority_hours"].get(row["team"], {})
+        if row["priority"] in team_rules:
+            return team_rules[row["priority"]]
+        return policy["priority_hours"].get(row["priority"], row["sla_target_hours"])
+
+    df = df.copy()
+    df["sla_target_hours"] = df.apply(target_for_row, axis=1)
+    return df
+
+
+def analyze_ops_data(input_path, output_dir, sla_policy_path=None):
 
     # -----------------------------
     # Load Data
     # -----------------------------
     df = pd.read_csv(input_path)
+    df = apply_sla_policy(df, load_sla_policy(sla_policy_path))
 
     df["created_at"] = pd.to_datetime(df["created_at"])
     df["resolved_at"] = pd.to_datetime(df["resolved_at"])
@@ -141,8 +189,14 @@ def analyze_ops_data(input_path, output_dir):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Analyze operations KPI data.")
+    parser.add_argument("--input", default="data/ops_tickets.csv", help="Ticket CSV path.")
+    parser.add_argument("--out", default="data", help="Output directory.")
+    parser.add_argument("--sla-policy", help="Optional JSON file with SLA thresholds.")
+    args = parser.parse_args()
 
     analyze_ops_data(
-        input_path="data/ops_tickets.csv",
-        output_dir="data"
+        input_path=args.input,
+        output_dir=args.out,
+        sla_policy_path=args.sla_policy,
     )

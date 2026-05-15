@@ -52,6 +52,7 @@ After:
 - Run `python3 -m pip install -r requirements.txt`.
 - Run `python3 src/generate_data.py`.
 - Run `python3 src/analysis.py`.
+- Optionally run `python3 src/analysis.py --sla-policy config/sla_policy.json`.
 - Open `data/kpi_summary.csv` first.
 
 ## How to fork and use this for your company
@@ -59,7 +60,7 @@ After:
 1. Click Fork.
 2. Rename the repo if needed.
 3. Replace `data/ops_tickets.csv` with your ticket export.
-4. Update SLA thresholds and team mappings in `src/analysis.py`.
+4. Update SLA thresholds in `config/sla_policy.json` and team mappings in `src/analysis.py`.
 5. Run the analysis before the weekly operations review.
 6. Move outputs into Google Sheets, Notion, Airtable, Linear, Asana, ClickUp, or your BI tool.
 
@@ -81,6 +82,7 @@ After:
 - SLA target
 - priority
 - breach reason
+- optional JSON SLA policy config
 
 The default sample data and examples are synthetic, anonymized, or template-only unless the repo explicitly documents a public source. Keep private customer, prospect, employee, investor, borrower, merchant, payment, or company data out of public forks.
 
@@ -241,7 +243,7 @@ Current sample outputs show:
 | --- | --- | --- |
 | Replace ticket data | `data/ops_tickets.csv` or `src/generate_data.py` | Use your real ticket lifecycle, queue, team, priority, and resolution fields. |
 | Map lifecycle fields | `src/analysis.py` | Align KPI logic with your ticketing system's column names and workflow. |
-| Tune SLA thresholds | `src/generate_data.py` or your source export | Match what your company considers low, medium, high, and critical service commitments. |
+| Tune SLA thresholds | `config/sla_policy.json` | Match what your company considers low, medium, high, and critical service commitments. |
 | Update backlog definition | `src/analysis.py` | Backlog should reflect your real operating risk, not just a sample flag. |
 | Refresh BI outputs | `data/*.csv` | Keep Tableau or other reporting layers aligned with the latest analysis. |
 | Update dashboard view | `dashboard/SLA_Backlog_Dashboard.png` or your BI tool | Reflect your real teams, queues, and review cadence. |
@@ -262,6 +264,21 @@ python3 src/analysis.py
 ```
 
 The scripts write CSV outputs into `data/`. Because this repo includes sample CSV outputs for portfolio review, running the scripts may modify tracked files. Commit refreshed CSVs only when you intentionally want to update the sample dataset and dashboard inputs.
+
+## SLA Policy Config
+
+Defaults still work without a policy file. To tune SLA promises without editing code, copy `config/sla_policy.json`, adjust the thresholds, and run:
+
+```bash
+python3 src/analysis.py --sla-policy config/sla_policy.json
+```
+
+Supported sections:
+
+- `priority_hours`: default SLA target hours by priority.
+- `team_priority_hours`: optional team-specific overrides by priority.
+
+Team-specific overrides win over the default priority threshold. If a priority is not listed, the script keeps the CSV's existing `sla_target_hours` value.
 
 ## Outputs
 
