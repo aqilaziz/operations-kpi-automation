@@ -4,6 +4,10 @@ Operations KPI workflow for SLA compliance, backlog risk, breach drivers, and te
 
 <!-- FOUNDER_OS_STANDARD_README -->
 
+## Portfolio role
+
+This is a supporting operations KPI automation repo. It is useful for showing SLA policy logic, backlog visibility, breach driver analysis, and founder-ready weekly ops summaries. It supports the portfolio as an operations analytics proof point, not as a flagship Founder OS module.
+
 ## The founder problem
 
 Ops-heavy startups can have ticket data but still miss the operating picture: where SLAs are slipping, which teams are overloaded, and what needs intervention before customers feel the problem.
